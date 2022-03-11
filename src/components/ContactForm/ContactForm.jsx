@@ -1,10 +1,12 @@
+import { useSelector, useDispatch } from 'react-redux';
+import { add } from '../../redux/actions';
 import { Formik, ErrorMessage } from 'formik';
 import { nanoid } from 'nanoid';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Button } from '../Buttons/Button';
 import { AddForm, Input, Message, LabelForm } from './ContactFormStyle';
-import propTypes from 'prop-types';
+// import propTypes from 'prop-types';
 
 const initialValues = {
   name: '',
@@ -19,7 +21,10 @@ const FormError = ({ name }) => {
   );
 };
 
-export const ContactForm = ({ contacts, onSubmit }) => {
+export const ContactForm = () => {
+  const contacts = useSelector(state => state.phonebook.contacts);
+
+  const dispatch = useDispatch();
   const handleSubmit = ({ name, number }, { resetForm }) => {
     // event.preventDefault();
     const nameInContacts = contacts.find(
@@ -29,8 +34,10 @@ export const ContactForm = ({ contacts, onSubmit }) => {
       toast.warn(`${name} is already in contacts`);
       return;
     }
-    const contactO = { id: nanoid(), name, number };
-    onSubmit(contactO);
+    const contactO = { id: nanoid(4), name, number };
+
+    dispatch(add(contactO));
+
     resetForm();
   };
 
@@ -69,7 +76,7 @@ export const ContactForm = ({ contacts, onSubmit }) => {
   );
 };
 
-ContactForm.propTypes = {
-  onSubmit: propTypes.func.isRequired,
-  contacts: propTypes.arrayOf(propTypes.object).isRequired,
-};
+// ContactForm.propTypes = {
+//   onSubmit: propTypes.func.isRequired,
+//   contacts: propTypes.arrayOf(propTypes.object).isRequired,
+// };
