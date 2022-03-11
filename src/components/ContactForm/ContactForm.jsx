@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Button } from '../Buttons/Button';
 import { AddForm, Input, Message, LabelForm } from './ContactFormStyle';
-// import propTypes from 'prop-types';
+import propTypes from 'prop-types';
 
 const initialValues = {
   name: '',
@@ -76,7 +76,7 @@ export const ContactForm = () => {
   );
 };
 
-// ContactForm.propTypes = {
-//   onSubmit: propTypes.func.isRequired,
-//   contacts: propTypes.arrayOf(propTypes.object).isRequired,
-// };
+ContactForm.propTypes = {
+  onSubmit: propTypes.func,
+  contacts: propTypes.arrayOf(propTypes.object).isRequired,
+};
